@@ -23,14 +23,19 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 # Display the table on the page.
 streamlit.dataframe(fruits_to_show)
 streamlit.header("Fruityvice Fruit Advice!")
-fruit_choice = streamlit.text_input('what fruit would you like information about?', 'kiwi')
+try:
+fruit_choice = streamlit.text_input('what fruit would you like information about?')
 streamlit.write('the user entered', fruit_choice)
-
+if not fruit_choice:
+  streamlit.error("Please select a fruit to get information.")
+else:
+  
 #import requests
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+ fruit_choice)
-
-# take the json version of the response and normalize it
 fruityvice_normalized = pandas.json_normalize (fruityvice_response.json())
+except URLError as e:
+  streamlit.error()
+# take the json version of the response and normalize it
 # output
 streamlit.dataframe(fruityvice_normalized)
 #don't run anything
