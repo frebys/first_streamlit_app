@@ -43,7 +43,7 @@ try:
 
  except (URLError) as why:
     return Response(why)
-       streamlit.error()
+      # streamlit.error()
 
 #don't run anything
 streamlit.stop()
